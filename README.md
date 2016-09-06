@@ -1,6 +1,8 @@
 # Micro
 ## A simple CSS grid system.
 
+### Configuration
+
 ```sass
 @import "micro";
 @include micro(12, 5px);
@@ -8,7 +10,7 @@
 
 Micro is more of a grid system builder than a grid system itself. Specify the number of columns you need and the gutter between each and Micro spits out a series of classes and Sass placeholders.
 
-### Classless
+#### Classless
 
 ```sass
 @import "micro";
@@ -17,7 +19,7 @@ Micro is more of a grid system builder than a grid system itself. Specify the nu
 
 Don’t want classes? You like your stylesheet clean? The third parameter allows you to turn off the classes and have just Sass placeholders.
 
-### Prefixes
+#### Prefixes
 
 Need to use two different grid systems on a single site? You might have good reasons.
 
@@ -28,7 +30,9 @@ Need to use two different grid systems on a single site? You might have good rea
 
 The fourth parameter allows you to prefix the classes and Sass placeholders.
 
-### Classes & Sass Placeholders
+### Use it!
+
+#### Classes & Sass Placeholders
 
 Micro generates two sets of classes and Sass placeholders: columns and column-offset.
 
