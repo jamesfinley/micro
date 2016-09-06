@@ -1,0 +1,22 @@
+@mixin micro($columns, $gutter, $includeClasses: true, $prefix: "") {
+	$columnWidth: 100% / $columns;
+	
+	#{if($includeClasses, "%#{$prefix}row, .#{$prefix}row", "%#{$prefix}row")} {
+		margin-bottom: $gutter * 2;
+		overflow: auto;
+	}
+	
+	@for $i from 1 through $columns {
+		#{if($includeClasses, "%#{$prefix}columns-#{$i}, .#{$prefix}columns-#{$i}", "%#{$prefix}columns-#{$i}")} {
+			float: left;
+			width: calc(#{$i * $columnWidth} - #{$gutter * 2});
+			margin-right: $gutter;
+			margin-left: $gutter;
+		}
+	}
+	@for $i from 1 through $columns - 1 {
+		#{if($includeClasses, "%#{$prefix}column-offset-#{$i}, .#{$prefix}column-offset-#{$i}", "%#{$prefix}column-offset-#{$i}")} {
+			margin-left: calc(#{$i * $columnWidth} + #{$gutter});
+		}
+	}
+}
