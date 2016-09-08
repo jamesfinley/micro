@@ -28,10 +28,7 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 }
 
 @mixin micro($columns, $gutter, $includeClasses: true, $prefix: "") {
-	$columnWidth: 100% / $columns;
-	
 	@include micro-settings-set((prefix: $prefix, columns: $columns, gutter: $gutter));
-	@debug $microSettings;
 	
 	#{if($includeClasses, "%#{$prefix}row, .#{$prefix}row", "%#{$prefix}row")} {
 		margin-bottom: $gutter * 2;
