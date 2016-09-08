@@ -1,6 +1,6 @@
 # Micro- A simple CSS grid system.
 
-Micro has two purposes. Prototyping quickly and converting your prototype to releasable code. Using classes to set the grid and the responsive traits of your page is quick, but this produces hard to manage HTML and CSS in the long run. Quickly switch to realeasable code by using mixins.
+Micro has two purposes. Prototyping quickly and converting your prototype to releasable code. Using classes to set the grid and the responsive traits of your page is quick, but this produces hard to manage HTML and CSS in the long run. Quickly switch to releasable code by using mixins.
 
 ## Configuration
 
