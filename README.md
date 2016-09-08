@@ -57,12 +57,12 @@ Once you have your breakpoints dialed in, you can quickly convert those to CSS.
 }
 nav {
 	@include micro-columns(12);
-	@include micro-columns-query(4, 990px);
-	@include micro-column-offset-query(1, 990px);
+	@include micro-columns-query(4, md);
+	@include micro-column-offset-query(1, md);
 }
 main {
 	@include micro-columns(12);
-	@include micro-columns-query(7, 990px);
+	@include micro-columns-query(7, md);
 }
 ```
 
