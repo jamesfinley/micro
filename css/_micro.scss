@@ -111,6 +111,16 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 }
 
 @mixin micro-column-offset-query($columns, $min, $prefix: "") {
+	@if $min == "sm" {
+		$min: 768px;
+	}
+	@else if $min == "md" {
+		$min: 990px;
+	}
+	@else if $min == "ld" {
+		$min: 1200px;
+	}
+	
 	@media (min-width: $min) {
 		@include micro-columns-offset($columns, $prefix);
 	}
