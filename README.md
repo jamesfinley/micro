@@ -68,3 +68,58 @@ main {
 ```
 
 That HTML is much more clean.
+
+### Mixins
+
+Unfortunately `@extend` doesn’t work within media queries, which I understand are important today in front-end development. So Micro provides two mixins to help with your responsive websites.
+
+```sass
+@import "micro";
+@include micro(12, 5px, false);
+
+.container {
+	@extend %row;
+}
+nav {
+	@extend %columns-4;
+	@extend %column-offset-1;
+	
+	@media (max-width: 580px) {
+		@include micro-columns(12);
+	}
+}
+main {
+	@extend %columns-8;
+	
+	@media (max-width: 580px) {
+		@include micro-columns(12);
+	}
+}
+```
+
+But what if I have multiple Micro grid systems? Those cool prefix things?
+
+```sass
+@import "micro";
+@include micro(12, 5px, false, "ms-");
+
+.container {
+	@extend %row;
+}
+nav {
+	@extend %columns-4;
+	@extend %column-offset-1;
+	
+	@media (max-width: 580px) {
+		@include micro-columns(10, "ms-");
+		@include micro-column-offset(1, "ms-");
+	}
+}
+main {
+	@extend %columns-8;
+	
+	@media (max-width: 580px) {
+		@include micro-columns(12, "ms-");
+	}
+}
+```
