@@ -1,5 +1,27 @@
+$microSettings: (prefix: '', columns: 12, gutter: 5px), ();
+
+@function micro-settings($prefix: "") {
+	$settings: "";
+	@for $i from 1 through length($microSettings) {
+		@if map-get(nth($microSettings, $i), prefix) == $prefix {
+			$settings: nth($microSettings, $i);
+		}
+	}
+	
+	@if $settings == "" {
+		@error "Settings for prefix not found. Please call Micro mixin first.";
+	}
+	@return $settings;
+}
+
 @mixin micro($columns, $gutter, $includeClasses: true, $prefix: "") {
 	$columnWidth: 100% / $columns;
+	
+	@for $i from 1 through length($microSettings) {
+		@if map-get(nth($microSettings, $i), prefix) == $prefix {
+			$microSettings: set-nth($microSettings, $i, (prefix: $prefix, columns: $columns, gutter: $gutter));
+		}
+	}
 	
 	#{if($includeClasses, "%#{$prefix}row, .#{$prefix}row", "%#{$prefix}row")} {
 		margin-bottom: $gutter * 2;
@@ -8,15 +30,35 @@
 	
 	@for $i from 1 through $columns {
 		#{if($includeClasses, "%#{$prefix}columns-#{$i}, .#{$prefix}columns-#{$i}", "%#{$prefix}columns-#{$i}")} {
-			float: left;
-			width: calc(#{$i * $columnWidth} - #{$gutter * 2});
-			margin-right: $gutter;
-			margin-left: $gutter;
+			@include micro-columns($i, $prefix);
 		}
 	}
 	@for $i from 1 through $columns - 1 {
 		#{if($includeClasses, "%#{$prefix}column-offset-#{$i}, .#{$prefix}column-offset-#{$i}", "%#{$prefix}column-offset-#{$i}")} {
-			margin-left: calc(#{$i * $columnWidth} + #{$gutter});
+			@include micro-column-offset($i, $prefix);
 		}
+	}
+}
+
+@mixin micro-columns($columns, $prefix: "") {
+	$settings: micro-settings($prefix);
+	@if $settings != "" {
+		$columnWidth: 100% / map-get($settings, columns);
+		$gutter: map-get($settings, gutter);
+		
+		float: left;
+		width: calc(#{$columns * $columnWidth} - #{$gutter * 2});
+		margin-right: map-get($settings, gutter);
+		margin-left: map-get($settings, gutter);
+	}
+}
+
+@mixin micro-column-offset($columns, $prefix: "") {
+	$settings: micro-settings($prefix);
+	@if $settings != "" {
+		$columnWidth: 100% / map-get($settings, columns);
+		$gutter: map-get($settings, gutter);
+		
+		margin-left: calc(#{$columns * $columnWidth} + #{$gutter});
 	}
 }
