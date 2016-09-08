@@ -9,19 +9,29 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 	}
 	
 	@if $settings == "" {
-		@error "Settings for prefix not found. Please call Micro mixin first.";
+		@error "Settings for prefix \"#{$prefix}\" not found. Please call Micro mixin first.";
 	}
 	@return $settings;
+}
+
+@mixin micro-settings-set($settings) {
+	$saved: false;
+	@for $i from 1 through length($microSettings) {
+		@if map-get(nth($microSettings, $i), prefix) == map-get($settings, prefix) {
+			$microSettings: set-nth($microSettings, $i, $settings) !global;
+			$saved: true;
+		}
+	}
+	@if $saved == false {
+		$microSettings: append($microSettings, $settings) !global;
+	}
 }
 
 @mixin micro($columns, $gutter, $includeClasses: true, $prefix: "") {
 	$columnWidth: 100% / $columns;
 	
-	@for $i from 1 through length($microSettings) {
-		@if map-get(nth($microSettings, $i), prefix) == $prefix {
-			$microSettings: set-nth($microSettings, $i, (prefix: $prefix, columns: $columns, gutter: $gutter));
-		}
-	}
+	@include micro-settings-set((prefix: $prefix, columns: $columns, gutter: $gutter));
+	@debug $microSettings;
 	
 	#{if($includeClasses, "%#{$prefix}row, .#{$prefix}row", "%#{$prefix}row")} {
 		margin-bottom: $gutter * 2;
