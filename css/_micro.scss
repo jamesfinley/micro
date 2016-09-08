@@ -27,22 +27,35 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 	}
 }
 
-@mixin micro($columns, $gutter, $includeClasses: true, $prefix: "") {
+@mixin micro($columns, $gutter, $enablePrototypeMode: true, $prefix: "") {
 	@include micro-settings-set((prefix: $prefix, columns: $columns, gutter: $gutter));
 	
-	#{if($includeClasses, "%#{$prefix}row, .#{$prefix}row", "%#{$prefix}row")} {
+	#{if($enablePrototypeMode, "%#{$prefix}row, .#{$prefix}row", "%#{$prefix}row")} {
 		margin-bottom: $gutter * 2;
 		overflow: auto;
 	}
 	
-	@for $i from 1 through $columns {
-		#{if($includeClasses, "%#{$prefix}columns-#{$i}, .#{$prefix}columns-#{$i}", "%#{$prefix}columns-#{$i}")} {
-			@include micro-columns($i, $prefix);
+	@if $enablePrototypeMode {
+		@for $i from 1 through $columns {
+			#{".#{$prefix}columns-#{$i}"} {
+				@include micro-columns($i, $prefix);
+			}
 		}
-	}
-	@for $i from 1 through $columns - 1 {
-		#{if($includeClasses, "%#{$prefix}column-offset-#{$i}, .#{$prefix}column-offset-#{$i}", "%#{$prefix}column-offset-#{$i}")} {
-			@include micro-column-offset($i, $prefix);
+		@for $i from 1 through $columns - 1 {
+			#{".#{$prefix}column-offset-#{$i}"} {
+				@include micro-column-offset($i, $prefix);
+			}
+		}
+		
+		$breakpoints: (min: 768px, class: '.#{$prefix}columns-sm'), (min: 990px, class: '.#{$prefix}columns-md'), (min: 1200px, class: '.#{$prefix}columns-ld');
+		@for $i from 1 through length($breakpoints) {
+			@media (min-width: #{map-get(nth($breakpoints, $i), min)}) {
+				@for $columnCount from 1 through $columns {
+					#{map-get(nth($breakpoints, $i), class)}-#{$columnCount} {
+						@include micro-columns($columnCount);
+					}
+				}
+			}
 		}
 	}
 }
