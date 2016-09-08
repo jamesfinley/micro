@@ -57,6 +57,17 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 				}
 			}
 		}
+		
+		$breakpoints: (min: 768px, class: '.#{$prefix}column-offset-sm'), (min: 990px, class: '.#{$prefix}column-offset-md'), (min: 1200px, class: '.#{$prefix}column-offset-ld');
+		@for $i from 1 through length($breakpoints) {
+			@media (min-width: #{map-get(nth($breakpoints, $i), min)}) {
+				@for $columnCount from 1 through $columns {
+					#{map-get(nth($breakpoints, $i), class)}-#{$columnCount} {
+						@include micro-column-offset($columnCount);
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -73,6 +84,12 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 	}
 }
 
+@mixin micro-columns-query($columns, $min, $prefix: "") {
+	@media (min-width: $min) {
+		@include micro-columns($columns, $prefix);
+	}
+}
+
 @mixin micro-column-offset($columns, $prefix: "") {
 	$settings: micro-settings($prefix);
 	@if $settings != "" {
@@ -80,5 +97,11 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 		$gutter: map-get($settings, gutter);
 		
 		margin-left: calc(#{$columns * $columnWidth} + #{$gutter});
+	}
+}
+
+@mixin micro-column-offset-query($columns, $min, $prefix: "") {
+	@media (min-width: $min) {
+		@include micro-columns-offset($columns, $prefix);
 	}
 }
