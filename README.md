@@ -72,3 +72,35 @@ main {
 	<main></main>
 </div>
 ```
+
+### Using Micro Breakpoints for Your Styles
+What if you need to change something other than the column count on a breakpoint? Micro’s got you covered!
+
+```sass
+@import "micro";
+@include micro(12, 5px, false);
+
+.container {
+	@extend %row;
+}
+nav {
+	@include micro-columns(12);
+	@include micro-columns-query(4, md);
+	@include micro-column-offset-query(1, md);
+	
+	@include micro-query(md) {
+		ul {
+			text-align: center;
+			
+			li {
+				display: inline-block;
+			}
+		}
+	}
+}
+main {
+	@include micro-columns(12);
+	@include micro-columns-query(7, md);
+}
+
+```
