@@ -96,5 +96,6 @@ nav {
 		}
 	}
 }
-
 ```
+
+The micro-query takes all the same breakpoints as other Micro mixins— sm, md, and ld— and applies the appropriate media query to the contents you pass it.
