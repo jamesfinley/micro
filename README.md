@@ -85,10 +85,8 @@ What if you need to change something other than the column count on a breakpoint
 }
 nav {
 	@include micro-columns(12);
-	@include micro-columns-query(4, md);
-	@include micro-column-offset-query(1, md);
 	
-	@include micro-query(md) {
+	@include micro-query(sm) {
 		ul {
 			text-align: center;
 			
@@ -97,10 +95,6 @@ nav {
 			}
 		}
 	}
-}
-main {
-	@include micro-columns(12);
-	@include micro-columns-query(7, md);
 }
 
 ```
