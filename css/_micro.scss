@@ -71,6 +71,22 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 	}
 }
 
+@mixin micro-query($min) {
+	@if $min == "sm" {
+		$min: 768px;
+	}
+	@else if $min == "md" {
+		$min: 990px;
+	}
+	@else if $min == "ld" {
+		$min: 1200px;
+	}
+	
+	@media (min-width: $min) {
+		@content;
+	}
+}
+
 @mixin micro-columns($columns, $prefix: "") {
 	$settings: micro-settings($prefix);
 	@if $settings != "" {
@@ -85,17 +101,7 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 }
 
 @mixin micro-columns-query($columns, $min, $prefix: "") {
-	@if $min == "sm" {
-		$min: 768px;
-	}
-	@else if $min == "md" {
-		$min: 990px;
-	}
-	@else if $min == "ld" {
-		$min: 1200px;
-	}
-	
-	@media (min-width: $min) {
+	@include micro-query($min) {
 		@include micro-columns($columns, $prefix);
 	}
 }
@@ -111,17 +117,7 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 }
 
 @mixin micro-column-offset-query($columns, $min, $prefix: "") {
-	@if $min == "sm" {
-		$min: 768px;
-	}
-	@else if $min == "md" {
-		$min: 990px;
-	}
-	@else if $min == "ld" {
-		$min: 1200px;
-	}
-	
-	@media (min-width: $min) {
+	@include micro-query($min) {
 		@include micro-columns-offset($columns, $prefix);
 	}
 }
