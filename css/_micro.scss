@@ -47,22 +47,15 @@ $microSettings: (prefix: '', columns: 12, gutter: 5px), ();
 			}
 		}
 		
-		$breakpoints: (min: 768px, class: '.#{$prefix}columns-sm'), (min: 990px, class: '.#{$prefix}columns-md'), (min: 1200px, class: '.#{$prefix}columns-ld');
-		@for $i from 1 through length($breakpoints) {
-			@media (min-width: #{map-get(nth($breakpoints, $i), min)}) {
+		$breakpoints-columns: (min: sm, class: '.#{$prefix}columns-sm'), (min: md, class: '.#{$prefix}columns-md'), (min: ld, class: '.#{$prefix}columns-ld');
+		$breakpoints-offsets: (min: sm, class: '.#{$prefix}column-offset-sm'), (min: md, class: '.#{$prefix}column-offset-md'), (min: ld, class: '.#{$prefix}column-offset-ld');
+		@for $i from 1 through length($breakpoints-columns) {
+			@include micro-query(map-get(nth($breakpoints-columns, $i), min)) {
 				@for $columnCount from 1 through $columns {
-					#{map-get(nth($breakpoints, $i), class)}-#{$columnCount} {
+					#{map-get(nth($breakpoints-columns, $i), class)}-#{$columnCount} {
 						@include micro-columns($columnCount);
 					}
-				}
-			}
-		}
-		
-		$breakpoints: (min: 768px, class: '.#{$prefix}column-offset-sm'), (min: 990px, class: '.#{$prefix}column-offset-md'), (min: 1200px, class: '.#{$prefix}column-offset-ld');
-		@for $i from 1 through length($breakpoints) {
-			@media (min-width: #{map-get(nth($breakpoints, $i), min)}) {
-				@for $columnCount from 1 through $columns {
-					#{map-get(nth($breakpoints, $i), class)}-#{$columnCount} {
+					#{map-get(nth($breakpoints-offsets, $i), class)}-#{$columnCount} {
 						@include micro-column-offset($columnCount);
 					}
 				}
